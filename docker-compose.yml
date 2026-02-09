@@ -1,0 +1,21 @@
+services:
+  frontapp:
+    build:
+      context: .
+      dockerfile: FrontApp.DockerFile
+      args:
+        - UID=${UID}
+        - GID=${GID}
+        - USERNAME=${USERNAME}
+        - GROUPNAME=${GROUPNAME}
+    container_name: "reactest"
+    tty: true
+    env_file: .env
+    user: "${UID}:${GID}"
+    ports:
+      - 3001:5173
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    command: ["npm", "run", "dev"]
